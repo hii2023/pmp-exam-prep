@@ -1,0 +1,651 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>PMP Exam Prep — 200 Questions</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&family=Fira+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg:#020617;--surface:#0F172A;--card:#1E293B;--border:#334155;
+    --primary:#22C55E;--primary-dim:#16A34A;--primary-glow:rgba(34,197,94,.15);
+    --accent:#38BDF8;--warn:#F59E0B;--danger:#EF4444;
+    --text:#F8FAFC;--text-muted:#94A3B8;--text-dim:#64748B;
+    --people:#A78BFA;--process:#38BDF8;--biz:#FB923C;
+    --people-bg:rgba(167,139,250,.12);--process-bg:rgba(56,189,248,.12);--biz-bg:rgba(251,146,60,.12);
+  }
+  [data-theme="light"]{
+    --bg:#F1F5F9;--surface:#FFFFFF;--card:#F8FAFC;--border:#E2E8F0;
+    --text:#0F172A;--text-muted:#475569;--text-dim:#94A3B8;
+    --primary-glow:rgba(34,197,94,.1);
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  body{font-family:'Fira Sans',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;transition:background .3s,color .3s;}
+
+  /* HEADER */
+  header{position:sticky;top:0;z-index:50;background:var(--surface);border-bottom:1px solid var(--border);
+    padding:12px 24px;display:flex;align-items:center;justify-content:space-between;gap:16px;backdrop-filter:blur(12px);}
+  .logo{font-family:'Fira Code',monospace;font-size:1.05rem;font-weight:700;color:var(--primary);letter-spacing:-.5px;white-space:nowrap;}
+  .logo span{color:var(--text-muted);font-weight:400;}
+  .score-bar{display:flex;align-items:center;gap:14px;flex:1;max-width:560px;margin:0 auto;}
+  .score-pill{display:flex;align-items:center;gap:7px;background:var(--card);border:1px solid var(--border);
+    border-radius:999px;padding:5px 14px;font-size:.8rem;font-family:'Fira Code',monospace;white-space:nowrap;}
+  .dot{width:8px;height:8px;border-radius:50%;}
+  .dot-green{background:var(--primary);}.dot-red{background:var(--danger);}
+  .progress-wrap{flex:1;height:6px;background:var(--border);border-radius:3px;overflow:hidden;}
+  .progress-fill{height:100%;background:linear-gradient(90deg,var(--primary),var(--accent));border-radius:3px;transition:width .4s ease;width:0%;}
+  .header-actions{display:flex;gap:8px;align-items:center;}
+  .btn{cursor:pointer;border:none;border-radius:8px;padding:7px 13px;font-size:.8rem;font-family:'Fira Sans',sans-serif;font-weight:600;transition:all .2s;}
+  .btn-ghost{background:transparent;border:1px solid var(--border);color:var(--text-muted);}
+  .btn-ghost:hover{background:var(--card);color:var(--text);border-color:var(--primary);}
+  .btn-primary{background:var(--primary);color:#0F172A;}
+  .btn-primary:hover{background:var(--primary-dim);transform:translateY(-1px);}
+  .btn-danger{background:var(--danger);color:#fff;}
+  .btn-danger:hover{opacity:.85;}
+
+  /* HERO */
+  .hero{padding:36px 24px 20px;max-width:1200px;margin:0 auto;}
+  .hero-title{font-family:'Fira Code',monospace;font-size:clamp(1.5rem,3.5vw,2.2rem);font-weight:700;line-height:1.2;}
+  .hero-title .highlight{color:var(--primary);}
+  .hero-sub{color:var(--text-muted);margin-top:8px;font-size:.92rem;max-width:680px;line-height:1.6;}
+  .stats-row{display:flex;flex-wrap:wrap;gap:10px;margin-top:20px;}
+  .stat-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:12px 18px;min-width:120px;}
+  .stat-val{font-family:'Fira Code',monospace;font-size:1.5rem;font-weight:700;}
+  .stat-label{font-size:.72rem;color:var(--text-muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px;}
+  .stat-card.people{border-color:var(--people);} .stat-card.people .stat-val{color:var(--people);}
+  .stat-card.process{border-color:var(--process);} .stat-card.process .stat-val{color:var(--process);}
+  .stat-card.biz{border-color:var(--biz);} .stat-card.biz .stat-val{color:var(--biz);}
+  .stat-card.total .stat-val{color:var(--primary);}
+
+  /* TABS */
+  .tabs-row{max-width:1200px;margin:20px auto 0;padding:0 24px;display:flex;gap:7px;flex-wrap:wrap;}
+  .tab{cursor:pointer;border:1px solid var(--border);background:var(--card);color:var(--text-muted);
+    border-radius:8px;padding:7px 16px;font-size:.82rem;font-weight:600;transition:all .2s;}
+  .tab:hover{color:var(--text);border-color:var(--primary);}
+  .tab.active{background:var(--primary);color:#0F172A;border-color:var(--primary);}
+  .tab.tab-people.active{background:var(--people);border-color:var(--people);}
+  .tab.tab-process.active{background:var(--process);border-color:var(--process);}
+  .tab.tab-biz.active{background:var(--biz);border-color:var(--biz);}
+
+  /* SEARCH & FILTER BAR */
+  .filter-bar{max-width:1200px;margin:14px auto 0;padding:0 24px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;}
+  .search-wrap{flex:1;min-width:200px;position:relative;}
+  .search-wrap svg{position:absolute;left:10px;top:50%;transform:translateY(-50%);color:var(--text-dim);}
+  .search-input{width:100%;background:var(--card);border:1px solid var(--border);border-radius:8px;
+    padding:8px 12px 8px 34px;color:var(--text);font-family:'Fira Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+  .search-input::placeholder{color:var(--text-dim);}
+  .search-input:focus{border-color:var(--primary);}
+  .diff-filter{display:flex;gap:6px;}
+  .diff-btn{cursor:pointer;border:1px solid var(--border);background:transparent;border-radius:6px;
+    padding:6px 12px;font-size:.78rem;font-weight:600;color:var(--text-muted);transition:all .2s;font-family:'Fira Sans',sans-serif;}
+  .diff-btn:hover{border-color:var(--primary);color:var(--text);}
+  .diff-btn.active{color:#0F172A;}
+  .diff-btn[data-d="easy"].active{background:var(--primary);border-color:var(--primary);}
+  .diff-btn[data-d="medium"].active{background:var(--warn);border-color:var(--warn);}
+  .diff-btn[data-d="hard"].active{background:var(--danger);border-color:var(--danger);}
+  .q-count-label{font-size:.8rem;color:var(--text-dim);white-space:nowrap;font-family:'Fira Code',monospace;}
+
+  /* CONCEPTS PANEL */
+  .concepts-section{max-width:1200px;margin:20px auto 0;padding:0 24px;}
+  .concepts-toggle{display:flex;align-items:center;gap:10px;margin-bottom:12px;cursor:pointer;
+    font-weight:600;font-size:.86rem;color:var(--text-muted);user-select:none;}
+  .concepts-toggle:hover{color:var(--text);}
+  .concepts-arrow{transition:transform .25s;}
+  .concepts-inner{display:none;}
+  .concepts-inner.open{display:block;}
+  .concepts-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:10px;}
+  .concept-card{background:var(--card);border:1px solid var(--border);border-radius:12px;padding:14px;
+    cursor:pointer;transition:all .2s;}
+  .concept-card:hover{border-color:var(--primary);transform:translateY(-2px);box-shadow:0 4px 20px var(--primary-glow);}
+  .concept-title{font-family:'Fira Code',monospace;font-size:.8rem;font-weight:700;color:var(--primary);margin-bottom:7px;}
+  .concept-body{font-size:.77rem;color:var(--text-muted);line-height:1.55;}
+  .concept-body strong{color:var(--text);}
+
+  /* QUESTIONS */
+  .q-section{max-width:1200px;margin:20px auto;padding:0 24px 100px;}
+  .section-label{font-family:'Fira Code',monospace;font-size:.72rem;font-weight:700;text-transform:uppercase;
+    letter-spacing:1.5px;color:var(--text-dim);margin-bottom:14px;display:flex;align-items:center;gap:10px;}
+  .section-label::after{content:'';flex:1;height:1px;background:var(--border);}
+  .q-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(340px,1fr));gap:14px;}
+
+  /* QUESTION CARD */
+  .q-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;
+    transition:all .25s;position:relative;overflow:hidden;}
+  .q-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;}
+  .q-card.people::before{background:var(--people);}
+  .q-card.process::before{background:var(--process);}
+  .q-card.biz::before{background:var(--biz);}
+  .q-card:hover{transform:translateY(-2px);box-shadow:0 8px 30px rgba(0,0,0,.3);}
+  .q-card.answered-correct{border-color:rgba(34,197,94,.4);}
+  .q-card.answered-wrong{border-color:rgba(239,68,68,.35);}
+  .q-header{display:flex;align-items:flex-start;justify-content:space-between;gap:8px;margin-bottom:10px;}
+  .q-num{font-family:'Fira Code',monospace;font-size:.72rem;font-weight:700;color:var(--text-dim);
+    background:var(--surface);padding:2px 7px;border-radius:5px;white-space:nowrap;}
+  .q-tags{display:flex;gap:6px;align-items:center;flex-wrap:wrap;justify-content:flex-end;}
+  .q-domain-tag{font-size:.67rem;font-weight:700;padding:2px 7px;border-radius:5px;text-transform:uppercase;letter-spacing:.4px;white-space:nowrap;}
+  .tag-people{background:var(--people-bg);color:var(--people);}
+  .tag-process{background:var(--process-bg);color:var(--process);}
+  .tag-biz{background:var(--biz-bg);color:var(--biz);}
+  .q-subtopic{font-size:.7rem;color:var(--text-dim);margin-bottom:8px;font-style:italic;}
+  .q-text{font-size:.86rem;color:var(--text);line-height:1.55;font-weight:500;margin-bottom:12px;}
+  .options{display:flex;flex-direction:column;gap:5px;}
+  .option{cursor:pointer;border:1px solid var(--border);border-radius:7px;padding:8px 11px;font-size:.81rem;
+    color:var(--text-muted);transition:all .18s;display:flex;align-items:flex-start;gap:9px;
+    line-height:1.4;background:transparent;}
+  .option:hover:not(.disabled){background:var(--surface);border-color:var(--primary);color:var(--text);}
+  .opt-label{font-family:'Fira Code',monospace;font-weight:700;font-size:.76rem;min-width:16px;color:var(--text-dim);}
+  .option.correct{background:rgba(34,197,94,.12);border-color:var(--primary);color:var(--primary);}
+  .option.correct .opt-label{color:var(--primary);}
+  .option.wrong{background:rgba(239,68,68,.1);border-color:var(--danger);color:var(--danger);}
+  .option.wrong .opt-label{color:var(--danger);}
+  .option.disabled{cursor:default;pointer-events:none;}
+  .option.reveal-correct{background:rgba(34,197,94,.07);border-color:rgba(34,197,94,.35);color:rgba(34,197,94,.75);}
+  .explanation{display:none;margin-top:10px;padding:9px 11px;background:var(--surface);
+    border-left:3px solid var(--primary);border-radius:0 7px 7px 0;font-size:.78rem;color:var(--text-muted);line-height:1.6;}
+  .explanation.show{display:block;}
+  .explanation strong{color:var(--primary);font-family:'Fira Code',monospace;}
+  .explanation.wrong-exp{border-left-color:var(--danger);}
+  .explanation.wrong-exp strong{color:var(--danger);}
+  .q-footer{display:flex;align-items:center;justify-content:space-between;margin-top:8px;}
+  .difficulty{font-size:.68rem;font-weight:700;padding:2px 6px;border-radius:4px;}
+  .diff-easy{background:rgba(34,197,94,.15);color:var(--primary);}
+  .diff-medium{background:rgba(245,158,11,.15);color:var(--warn);}
+  .diff-hard{background:rgba(239,68,68,.15);color:var(--danger);}
+  .result-icon{font-size:1rem;display:none;}
+  .result-icon.show{display:block;}
+
+  /* EMPTY STATE */
+  .empty-state{text-align:center;padding:60px 20px;color:var(--text-dim);}
+  .empty-state svg{margin-bottom:16px;opacity:.4;}
+  .empty-state p{font-size:.9rem;}
+
+  /* MODAL */
+  .modal-overlay{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:100;
+    align-items:center;justify-content:center;padding:20px;}
+  .modal-overlay.show{display:flex;}
+  .modal{background:var(--surface);border:1px solid var(--border);border-radius:20px;
+    max-width:520px;width:100%;padding:28px;}
+  .modal-title{font-family:'Fira Code',monospace;font-size:1.3rem;font-weight:700;color:var(--primary);margin-bottom:6px;}
+  .modal-score{font-size:2.8rem;font-weight:700;font-family:'Fira Code',monospace;}
+  .modal-grade{font-size:.88rem;color:var(--text-muted);margin-bottom:16px;}
+  .modal-breakdown{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin:16px 0;}
+  .modal-stat{background:var(--card);border-radius:10px;padding:12px;text-align:center;}
+  .modal-stat-val{font-family:'Fira Code',monospace;font-size:1.4rem;font-weight:700;}
+  .modal-stat-label{font-size:.7rem;color:var(--text-muted);margin-top:3px;}
+  .modal-domain-breakdown{margin:12px 0;}
+  .domain-row{display:flex;align-items:center;gap:10px;margin-bottom:7px;font-size:.82rem;}
+  .domain-label{width:120px;color:var(--text-muted);}
+  .domain-bar-wrap{flex:1;height:7px;background:var(--border);border-radius:4px;overflow:hidden;}
+  .domain-bar-fill{height:100%;border-radius:4px;transition:width .6s ease;}
+  .domain-pct{width:34px;text-align:right;font-family:'Fira Code',monospace;font-size:.78rem;color:var(--text-muted);}
+
+  /* ADD QUESTION MODAL */
+  .add-modal{max-width:640px;}
+  .form-group{margin-bottom:14px;}
+  .form-label{display:block;font-size:.8rem;font-weight:600;color:var(--text-muted);margin-bottom:5px;}
+  .form-input,.form-select,.form-textarea{width:100%;background:var(--card);border:1px solid var(--border);
+    border-radius:8px;padding:8px 12px;color:var(--text);font-family:'Fira Sans',sans-serif;font-size:.85rem;outline:none;transition:border-color .2s;}
+  .form-textarea{resize:vertical;min-height:70px;}
+  .form-input:focus,.form-select:focus,.form-textarea:focus{border-color:var(--primary);}
+  .form-select option{background:var(--surface);}
+  .opts-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;}
+  .correct-opts{display:flex;gap:8px;flex-wrap:wrap;margin-top:6px;}
+  .correct-opt{cursor:pointer;border:1px solid var(--border);border-radius:6px;padding:5px 14px;
+    font-size:.8rem;font-family:'Fira Code',monospace;font-weight:700;color:var(--text-muted);
+    background:transparent;transition:all .2s;}
+  .correct-opt:hover,.correct-opt.selected{background:var(--primary);border-color:var(--primary);color:#0F172A;}
+
+  /* FLOAT ACTIONS */
+  .float-actions{position:fixed;bottom:24px;right:24px;display:flex;flex-direction:column;gap:10px;z-index:40;}
+  .fab{cursor:pointer;width:46px;height:46px;border-radius:50%;border:none;display:flex;align-items:center;
+    justify-content:center;box-shadow:0 4px 20px rgba(0,0,0,.4);transition:all .2s;font-size:1.1rem;}
+  .fab:hover{transform:scale(1.1);}
+  .fab-primary{background:var(--primary);color:#0F172A;}
+  .fab-secondary{background:var(--card);border:1px solid var(--border);color:var(--text-muted);}
+  .fab-add{background:var(--accent);color:#0F172A;}
+
+  /* SCROLLBAR */
+  ::-webkit-scrollbar{width:5px;}::-webkit-scrollbar-track{background:var(--bg);}
+  ::-webkit-scrollbar-thumb{background:var(--border);border-radius:3px;}
+
+  @media(max-width:768px){
+    .score-bar{display:none;}.q-grid{grid-template-columns:1fr;}
+    .stats-row{gap:7px;}.stat-card{min-width:100px;}
+    .opts-grid{grid-template-columns:1fr;}
+  }
+  @media(prefers-reduced-motion:reduce){*{transition:none!important;animation:none!important;}}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header>
+  <div class="logo">PMP<span>.prep</span></div>
+  <div class="score-bar">
+    <div class="score-pill"><div class="dot dot-green"></div><span id="correctCount">0</span>&nbsp;Correct</div>
+    <div class="progress-wrap"><div class="progress-fill" id="progressBar"></div></div>
+    <div class="score-pill"><div class="dot dot-red"></div><span id="wrongCount">0</span>&nbsp;Wrong</div>
+  </div>
+  <div class="header-actions">
+    <button class="btn btn-ghost" onclick="toggleTheme()">☀ / ☾</button>
+    <button class="btn btn-ghost" onclick="openAddModal()">+ Add Q</button>
+    <button class="btn btn-ghost" onclick="showResults()">Results</button>
+    <button class="btn btn-primary" onclick="resetAll()">Reset</button>
+  </div>
+</header>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-title">PMP Exam Prep <span class="highlight">200 Questions</span></div>
+  <div class="hero-sub">Complete question bank covering all ECO 2021 domains — People (42%), Process (50%) & Business Environment (8%). Click any option to answer, read the explanation, filter by domain or difficulty.</div>
+  <div class="stats-row">
+    <div class="stat-card total"><div class="stat-val" id="totalQCount">200</div><div class="stat-label">Total Questions</div></div>
+    <div class="stat-card people"><div class="stat-val">42%</div><div class="stat-label">People Domain</div></div>
+    <div class="stat-card process"><div class="stat-val">50%</div><div class="stat-label">Process Domain</div></div>
+    <div class="stat-card biz"><div class="stat-val">8%</div><div class="stat-label">Business Env.</div></div>
+    <div class="stat-card" style="border-color:var(--warn)"><div class="stat-val" style="color:var(--warn)">70%</div><div class="stat-label">Pass Threshold</div></div>
+    <div class="stat-card" style="border-color:var(--accent)"><div class="stat-val" id="pctDisplay" style="color:var(--accent)">0%</div><div class="stat-label">Your Score</div></div>
+  </div>
+</div>
+
+<!-- TABS -->
+<div class="tabs-row">
+  <div class="tab active" data-domain="all" onclick="filterDomain('all',this)">All</div>
+  <div class="tab tab-people" data-domain="people" onclick="filterDomain('people',this)">People</div>
+  <div class="tab tab-process" data-domain="process" onclick="filterDomain('process',this)">Process</div>
+  <div class="tab tab-biz" data-domain="biz" onclick="filterDomain('biz',this)">Business Env.</div>
+</div>
+
+<!-- SEARCH + DIFFICULTY FILTER -->
+<div class="filter-bar">
+  <div class="search-wrap">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+    <input class="search-input" id="searchInput" placeholder="Search questions, topics, keywords…" oninput="applyFilters()">
+  </div>
+  <div class="diff-filter">
+    <button class="diff-btn" data-d="easy" onclick="toggleDiff('easy',this)">Easy</button>
+    <button class="diff-btn" data-d="medium" onclick="toggleDiff('medium',this)">Medium</button>
+    <button class="diff-btn" data-d="hard" onclick="toggleDiff('hard',this)">Hard</button>
+  </div>
+  <span class="q-count-label" id="qCountLabel">200 questions</span>
+</div>
+
+<!-- KEY CONCEPTS -->
+<div class="concepts-section">
+  <div class="concepts-toggle" onclick="toggleConcepts()">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2L2 7l10 5 10-5-10-5z"/><path d="M2 17l10 5 10-5"/><path d="M2 12l10 5 10-5"/></svg>
+    Key Concepts Cheat Sheet — Click to expand
+    <svg class="concepts-arrow" id="conceptsArrow" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+  </div>
+  <div class="concepts-inner" id="conceptsInner">
+    <div class="concepts-grid">
+      <div class="concept-card"><div class="concept-title">EVM Formulas</div><div class="concept-body"><strong>CPI</strong>=EV/AC — &lt;1 over budget<br><strong>SPI</strong>=EV/PV — &lt;1 behind schedule<br><strong>EAC</strong>=BAC/CPI (typical)<br><strong>EAC</strong>=AC+(BAC-EV) (atypical variance)<br><strong>ETC</strong>=EAC−AC<br><strong>VAC</strong>=BAC−EAC<br><strong>TCPI</strong>=(BAC−EV)/(BAC−AC)</div></div>
+      <div class="concept-card"><div class="concept-title">Schedule Compression</div><div class="concept-body"><strong>Crashing</strong>=Add resources to critical path. Costs increase. No extra risk.<br><strong>Fast Tracking</strong>=Overlap sequential activities. Risk increases. No extra cost.<br><strong>Rule:</strong> No resources → Fast Track. Have budget → Crash.</div></div>
+      <div class="concept-card"><div class="concept-title">Stakeholder Grid</div><div class="concept-body"><strong>High Power + High Interest</strong>=Manage Closely<br><strong>High Power + Low Interest</strong>=Keep Satisfied<br><strong>Low Power + High Interest</strong>=Keep Informed<br><strong>Low Power + Low Interest</strong>=Monitor<br><strong>Salience Model:</strong> Power + Legitimacy + Urgency</div></div>
+      <div class="concept-card"><div class="concept-title">Conflict Resolution</div><div class="concept-body"><strong>Collaborating</strong>=Win-Win → Most durable<br><strong>Compromising</strong>=Lose-Lose → Moderate<br><strong>Smoothing</strong>=Temporary fix → Short-term<br><strong>Forcing</strong>=Win-Lose → Least preferred<br><strong>Withdrawing</strong>=No resolution</div></div>
+      <div class="concept-card"><div class="concept-title">Risk Response</div><div class="concept-body"><strong>Threats:</strong> Avoid, Transfer, Mitigate, Accept<br><strong>Opportunities:</strong> Exploit, Share, Enhance, Accept<br><strong>Residual risk</strong>=after response applied<br><strong>Secondary risk</strong>=created BY the response<br><strong>Workaround</strong>=unplanned, for unknowns</div></div>
+      <div class="concept-card"><div class="concept-title">Contract Types</div><div class="concept-body"><strong>FFP</strong>=Fixed Price — seller high risk<br><strong>CPFF</strong>=Cost+ Fixed Fee — buyer high risk<br><strong>T&M</strong>=Time & Material — mixed risk<br><strong>CPIF</strong>=Cost+ Incentive — share savings<br><strong>FPIF</strong>=Fixed Price + Incentive</div></div>
+      <div class="concept-card"><div class="concept-title">Tuckman's Stages</div><div class="concept-body"><strong>1. Forming</strong>→Directing<br><strong>2. Storming</strong>→Coaching<br><strong>3. Norming</strong>→Supporting<br><strong>4. Performing</strong>→Delegating<br><strong>5. Adjourning</strong>→Recognizing & closing</div></div>
+      <div class="concept-card"><div class="concept-title">Agile / Scrum Roles</div><div class="concept-body"><strong>Product Owner</strong>=backlog owner, priorities, ROI<br><strong>Scrum Master</strong>=coach, removes impediments, servant-leader<br><strong>Dev Team</strong>=self-organizing, cross-functional<br><strong>Sprint</strong>=1–4 week time-box<br><strong>DoD</strong>=team-defined 'done' criteria</div></div>
+      <div class="concept-card"><div class="concept-title">Communication Channels</div><div class="concept-body"><strong>Formula:</strong> N×(N−1)/2<br>5 people=10 channels<br>10 people=45 channels<br>20 people=190 channels<br><strong>Push</strong>=send to recipients<br><strong>Pull</strong>=retrieve on demand<br><strong>Interactive</strong>=real-time two-way</div></div>
+      <div class="concept-card"><div class="concept-title">Quality Tools (7 Basic)</div><div class="concept-body"><strong>Control Chart</strong>=detect variation (UCL/LCL)<br><strong>Pareto</strong>=80/20 rule, prioritize defects<br><strong>Ishikawa</strong>=root cause (fishbone)<br><strong>Scatter</strong>=correlation between variables<br><strong>Histogram</strong>=frequency distribution<br><strong>Run Chart</strong>=trends over time</div></div>
+      <div class="concept-card"><div class="concept-title">Kanban Principles</div><div class="concept-body"><strong>WIP Limits</strong>=reduce bottlenecks, improve flow<br><strong>Pull System</strong>=team pulls work when ready<br><strong>No sprints</strong>—continuous delivery<br><strong>Cycle time</strong>=key metric<br><strong>CFD</strong>=Cumulative Flow Diagram tracks flow<br><strong>Lead time</strong>=request to delivery</div></div>
+      <div class="concept-card"><div class="concept-title">Change Control Process</div><div class="concept-body"><strong>1.</strong> Evaluate impact on all baselines<br><strong>2.</strong> Submit to CCB<br><strong>3.</strong> CCB approves or rejects (document both)<br><strong>4.</strong> Update affected plans/baselines<br><strong>5.</strong> Implement only after approval<br><strong>Gold plating</strong>=unauthorized feature adds</div></div>
+      <div class="concept-card"><div class="concept-title">Motivation Theories</div><div class="concept-body"><strong>Maslow:</strong> Physiological→Safety→Social→Esteem→Self-actualization<br><strong>Herzberg:</strong> Motivators=achievement, recognition; Hygiene=salary, conditions<br><strong>Theory X:</strong> people avoid work<br><strong>Theory Y:</strong> people self-motivate<br><strong>McClelland:</strong> nAch, nAff, nPow</div></div>
+      <div class="concept-card"><div class="concept-title">Organizational Structures</div><div class="concept-body"><strong>Functional:</strong> PM=low authority<br><strong>Weak Matrix:</strong> PM=limited authority<br><strong>Balanced Matrix:</strong> PM=shared authority<br><strong>Strong Matrix:</strong> PM=high authority<br><strong>Projectized:</strong> PM=full authority<br>PMO types: Supportive/Controlling/Directive</div></div>
+      <div class="concept-card"><div class="concept-title">Cost of Quality</div><div class="concept-body"><strong>Conformance Costs:</strong><br>Prevention (training, design reviews)<br>Appraisal (inspection, testing)<br><strong>Non-Conformance Costs:</strong><br>Internal failure (rework, scrap)<br>External failure (warranty, complaints)<br>Prevention $$$ saves failure $$$$$</div></div>
+      <div class="concept-card"><div class="concept-title">Float / Critical Path</div><div class="concept-body"><strong>Total Float</strong>=LS−ES or LF−EF<br><strong>Free Float</strong>=can delay without affecting successor's ES<br><strong>Critical Path</strong>=longest path, zero float<br><strong>Forward pass</strong>=calculate ES/EF<br><strong>Backward pass</strong>=calculate LS/LF<br>Float=0 on critical path</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- QUESTIONS CONTAINER -->
+<div class="q-section" id="questionsContainer"></div>
+
+<!-- RESULTS MODAL -->
+<div class="modal-overlay" id="resultsModal" onclick="if(event.target===this)closeModal('resultsModal')">
+  <div class="modal">
+    <div class="modal-title">// exam_results</div>
+    <div class="modal-score" id="modalScore">0%</div>
+    <div class="modal-grade" id="modalGrade"></div>
+    <div class="modal-breakdown">
+      <div class="modal-stat"><div class="modal-stat-val" id="mCorrect" style="color:var(--primary)">0</div><div class="modal-stat-label">Correct</div></div>
+      <div class="modal-stat"><div class="modal-stat-val" id="mWrong" style="color:var(--danger)">0</div><div class="modal-stat-label">Wrong</div></div>
+      <div class="modal-stat"><div class="modal-stat-val" id="mUnanswered" style="color:var(--warn)">0</div><div class="modal-stat-label">Unanswered</div></div>
+    </div>
+    <div class="modal-domain-breakdown" id="domainBreakdown"></div>
+    <div style="display:flex;gap:8px;margin-top:12px;">
+      <button class="btn btn-primary" style="flex:1" onclick="closeModal('resultsModal')">Continue Studying</button>
+      <button class="btn btn-danger" style="flex:1" onclick="resetAll();closeModal('resultsModal')">Reset All</button>
+    </div>
+  </div>
+</div>
+
+<!-- ADD QUESTION MODAL -->
+<div class="modal-overlay" id="addModal" onclick="if(event.target===this)closeModal('addModal')">
+  <div class="modal add-modal">
+    <div class="modal-title">// add_question</div>
+    <p style="font-size:.82rem;color:var(--text-muted);margin-bottom:16px;">Add a custom question. It will appear instantly in the question bank for this session. To make it permanent, also add it to <strong style="color:var(--primary)">questions.js</strong> following the template at the top of that file.</p>
+    <div class="form-group">
+      <label class="form-label">Question Text *</label>
+      <textarea class="form-textarea" id="aqText" placeholder="Enter your question here…"></textarea>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Answer Options *</label>
+      <div class="opts-grid">
+        <input class="form-input" id="aqA" placeholder="A — Option A">
+        <input class="form-input" id="aqB" placeholder="B — Option B">
+        <input class="form-input" id="aqC" placeholder="C — Option C">
+        <input class="form-input" id="aqD" placeholder="D — Option D">
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Correct Answer *</label>
+      <div class="correct-opts">
+        <button class="correct-opt" data-v="0" onclick="selectCorrect(0,this)">A</button>
+        <button class="correct-opt" data-v="1" onclick="selectCorrect(1,this)">B</button>
+        <button class="correct-opt" data-v="2" onclick="selectCorrect(2,this)">C</button>
+        <button class="correct-opt" data-v="3" onclick="selectCorrect(3,this)">D</button>
+      </div>
+    </div>
+    <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;" class="form-group">
+      <div>
+        <label class="form-label">Domain *</label>
+        <select class="form-select" id="aqDomain">
+          <option value="people">People</option>
+          <option value="process">Process</option>
+          <option value="biz">Business Env.</option>
+        </select>
+      </div>
+      <div>
+        <label class="form-label">Subtopic</label>
+        <input class="form-input" id="aqSubtopic" placeholder="e.g. Risk Management">
+      </div>
+      <div>
+        <label class="form-label">Difficulty</label>
+        <select class="form-select" id="aqDiff">
+          <option value="easy">Easy</option>
+          <option value="medium" selected>Medium</option>
+          <option value="hard">Hard</option>
+        </select>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Explanation</label>
+      <textarea class="form-textarea" id="aqExp" placeholder="Explain why the correct answer is right…"></textarea>
+    </div>
+    <div id="aqError" style="color:var(--danger);font-size:.8rem;margin-bottom:10px;display:none;"></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn btn-primary" style="flex:1" onclick="submitAddQuestion()">Add Question</button>
+      <button class="btn btn-ghost" style="flex:1" onclick="closeModal('addModal')">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<!-- FLOAT BUTTONS -->
+<div class="float-actions">
+  <button class="fab fab-secondary" onclick="window.scrollTo({top:0,behavior:'smooth'})" title="Back to top">↑</button>
+  <button class="fab fab-add" onclick="openAddModal()" title="Add question">+</button>
+  <button class="fab fab-primary" onclick="showResults()" title="View Results">%</button>
+</div>
+
+<script src="questions.js"></script>
+<script>
+// ── State ──────────────────────────────────────────────────
+let correct=0, wrong=0, answered=0;
+let activeDomain='all', activeDiffs=new Set(), searchQuery='';
+let addCorrectIdx=null;
+
+// ── Render ─────────────────────────────────────────────────
+function getFiltered(){
+  let list=QUESTIONS;
+  if(activeDomain!=='all') list=list.filter(q=>q.domain===activeDomain);
+  if(activeDiffs.size>0) list=list.filter(q=>activeDiffs.has(q.difficulty));
+  if(searchQuery){
+    const s=searchQuery.toLowerCase();
+    list=list.filter(q=>q.q.toLowerCase().includes(s)||q.subtopic.toLowerCase().includes(s)||
+      q.opts.some(o=>o.toLowerCase().includes(s))||q.exp.toLowerCase().replace(/<[^>]+>/g,'').includes(s));
+  }
+  return list;
+}
+
+function renderQuestions(){
+  const container=document.getElementById('questionsContainer');
+  const filtered=getFiltered();
+  document.getElementById('qCountLabel').textContent=filtered.length+' question'+(filtered.length!==1?'s':'');
+  document.getElementById('totalQCount').textContent=QUESTIONS.length;
+
+  if(filtered.length===0){
+    container.innerHTML=`<div class="empty-state">
+      <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
+      <p>No questions match your filters.<br>Try clearing the search or difficulty filters.</p>
+    </div>`;
+    return;
+  }
+
+  const sections={};
+  filtered.forEach(q=>{if(!sections[q.domain])sections[q.domain]=[];sections[q.domain].push(q);});
+  const labels={people:'People Domain — 42%',process:'Process Domain — 50%',biz:'Business Environment — 8%'};
+  let html='';
+
+  Object.entries(sections).forEach(([dom,qs])=>{
+    if(activeDomain==='all') html+=`<div class="section-label">${labels[dom]}</div>`;
+    html+='<div class="q-grid">';
+    qs.forEach(q=>{
+      const diffClass=q.difficulty==='easy'?'diff-easy':q.difficulty==='medium'?'diff-medium':'diff-hard';
+      const opts=q.opts.map((o,i)=>{
+        const L=['A','B','C','D'][i];
+        return `<div class="option" id="opt-${q.id}-${i}" onclick="selectAnswer(${q.id},${i})"><span class="opt-label">${L}</span>${o}</div>`;
+      }).join('');
+      html+=`<div class="q-card ${q.domain}" id="card-${q.id}">
+        <div class="q-header">
+          <span class="q-num">Q${q.id}</span>
+          <div class="q-tags">
+            <span class="q-domain-tag tag-${q.domain}">${q.domain==='people'?'People':q.domain==='process'?'Process':'Biz Env'}</span>
+          </div>
+        </div>
+        <div class="q-subtopic">${q.subtopic}</div>
+        <div class="q-text">${q.q}</div>
+        <div class="options">${opts}</div>
+        <div class="explanation" id="exp-${q.id}">${q.exp}</div>
+        <div class="q-footer">
+          <span class="difficulty ${diffClass}">${q.difficulty}</span>
+          <span class="result-icon" id="icon-${q.id}"></span>
+        </div>
+      </div>`;
+    });
+    html+='</div>';
+  });
+
+  container.innerHTML=html;
+  filtered.forEach(q=>{ if(q._answered!==undefined) restoreState(q); });
+}
+
+function restoreState(q){
+  const opts=document.querySelectorAll(`[id^="opt-${q.id}-"]`);
+  if(!opts.length) return;
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    if(i===q.correct) el.classList.add('correct');
+    else if(i===q._answered&&q._answered!==q.correct) el.classList.add('wrong');
+    else if(i===q.correct&&q._answered!==q.correct) el.classList.add('reveal-correct');
+  });
+  if(q._answered!==q.correct){
+    const ce=document.getElementById(`opt-${q.id}-${q.correct}`);
+    if(ce){ce.classList.remove('wrong');ce.classList.add('reveal-correct');}
+  }
+  const exp=document.getElementById(`exp-${q.id}`);
+  if(exp){exp.classList.add('show');if(!q._correct)exp.classList.add('wrong-exp');}
+  const icon=document.getElementById(`icon-${q.id}`);
+  if(icon){icon.classList.add('show');icon.textContent=q._correct?'✓':'✗';icon.style.color=q._correct?'var(--primary)':'var(--danger)';}
+  const card=document.getElementById(`card-${q.id}`);
+  if(card) card.classList.add(q._correct?'answered-correct':'answered-wrong');
+}
+
+// ── Answer Logic ───────────────────────────────────────────
+function selectAnswer(qId,sel){
+  const q=QUESTIONS.find(x=>x.id===qId);
+  if(q._answered!==undefined) return;
+  q._answered=sel;
+
+  const opts=document.querySelectorAll(`[id^="opt-${qId}-"]`);
+  opts.forEach((el,i)=>{
+    el.classList.add('disabled');
+    if(i===q.correct) el.classList.add('correct');
+    else if(i===sel&&sel!==q.correct) el.classList.add('wrong');
+  });
+  if(sel!==q.correct){
+    const ce=document.getElementById(`opt-${qId}-${q.correct}`);
+    if(ce) ce.classList.add('reveal-correct');
+  }
+
+  const exp=document.getElementById(`exp-${qId}`);
+  exp.classList.add('show');
+  if(sel!==q.correct) exp.classList.add('wrong-exp');
+
+  const icon=document.getElementById(`icon-${qId}`);
+  const card=document.getElementById(`card-${qId}`);
+  icon.classList.add('show');
+
+  if(sel===q.correct){
+    correct++;q._correct=true;
+    icon.textContent='✓';icon.style.color='var(--primary)';
+    card.classList.add('answered-correct');
+  } else {
+    wrong++;q._correct=false;
+    icon.textContent='✗';icon.style.color='var(--danger)';
+    card.classList.add('answered-wrong');
+  }
+  answered++;
+  updateStats();
+}
+
+function updateStats(){
+  document.getElementById('correctCount').textContent=correct;
+  document.getElementById('wrongCount').textContent=wrong;
+  const pct=answered>0?Math.round(correct/answered*100):0;
+  document.getElementById('pctDisplay').textContent=pct+'%';
+  document.getElementById('progressBar').style.width=(answered/QUESTIONS.length*100)+'%';
+}
+
+// ── Filters ────────────────────────────────────────────────
+function filterDomain(domain,el){
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  el.classList.add('active');
+  activeDomain=domain;
+  renderQuestions();
+}
+
+function toggleDiff(d,el){
+  if(activeDiffs.has(d)){activeDiffs.delete(d);el.classList.remove('active');}
+  else{activeDiffs.add(d);el.classList.add('active');}
+  renderQuestions();
+}
+
+function applyFilters(){
+  searchQuery=document.getElementById('searchInput').value;
+  renderQuestions();
+}
+
+// ── Results Modal ──────────────────────────────────────────
+function showResults(){
+  const pct=answered>0?Math.round(correct/answered*100):0;
+  document.getElementById('modalScore').textContent=pct+'%';
+  document.getElementById('modalScore').style.color=pct>=75?'var(--primary)':pct>=70?'var(--warn)':'var(--danger)';
+  document.getElementById('modalGrade').textContent=
+    pct>=75?'Excellent! You are likely ready for the PMP exam.':
+    pct>=70?'Borderline pass — review weak areas and retake.':
+    pct>=50?'Getting closer — focus on flagged topics.':
+    'Keep studying — review key concepts and retry.';
+  document.getElementById('mCorrect').textContent=correct;
+  document.getElementById('mWrong').textContent=wrong;
+  document.getElementById('mUnanswered').textContent=QUESTIONS.length-answered;
+
+  // Domain breakdown
+  const doms=['people','process','biz'];
+  const dLabels={people:'People',process:'Process',biz:'Biz Env.'};
+  const dColors={people:'var(--people)',process:'var(--process)',biz:'var(--biz)'};
+  let bHtml='';
+  doms.forEach(d=>{
+    const dQs=QUESTIONS.filter(q=>q.domain===d&&q._answered!==undefined);
+    const dCorrect=dQs.filter(q=>q._correct).length;
+    const dPct=dQs.length>0?Math.round(dCorrect/dQs.length*100):0;
+    bHtml+=`<div class="domain-row">
+      <span class="domain-label">${dLabels[d]}</span>
+      <div class="domain-bar-wrap"><div class="domain-bar-fill" style="width:${dPct}%;background:${dColors[d]}"></div></div>
+      <span class="domain-pct">${dPct}%</span>
+    </div>`;
+  });
+  document.getElementById('domainBreakdown').innerHTML=bHtml;
+  document.getElementById('resultsModal').classList.add('show');
+}
+
+function closeModal(id){ document.getElementById(id).classList.remove('show'); }
+
+// ── Reset ──────────────────────────────────────────────────
+function resetAll(){
+  QUESTIONS.forEach(q=>{delete q._answered;delete q._correct;});
+  correct=0;wrong=0;answered=0;
+  updateStats();
+  renderQuestions();
+}
+
+// ── Theme ──────────────────────────────────────────────────
+function toggleTheme(){
+  const h=document.documentElement;
+  h.setAttribute('data-theme',h.getAttribute('data-theme')==='dark'?'light':'dark');
+}
+
+// ── Concepts ──────────────────────────────────────────────
+function toggleConcepts(){
+  const inner=document.getElementById('conceptsInner');
+  const arrow=document.getElementById('conceptsArrow');
+  inner.classList.toggle('open');
+  arrow.style.transform=inner.classList.contains('open')?'rotate(180deg)':'';
+}
+
+// ── Add Question Modal ─────────────────────────────────────
+function openAddModal(){
+  addCorrectIdx=null;
+  ['aqText','aqA','aqB','aqC','aqD','aqSubtopic','aqExp'].forEach(id=>document.getElementById(id).value='');
+  document.querySelectorAll('.correct-opt').forEach(b=>b.classList.remove('selected'));
+  document.getElementById('aqError').style.display='none';
+  document.getElementById('addModal').classList.add('show');
+}
+
+function selectCorrect(idx,btn){
+  addCorrectIdx=idx;
+  document.querySelectorAll('.correct-opt').forEach(b=>b.classList.remove('selected'));
+  btn.classList.add('selected');
+}
+
+function submitAddQuestion(){
+  const errEl=document.getElementById('aqError');
+  errEl.style.display='none';
+  const qText=document.getElementById('aqText').value.trim();
+  const opts=['aqA','aqB','aqC','aqD'].map(id=>document.getElementById(id).value.trim());
+  const domain=document.getElementById('aqDomain').value;
+  const subtopic=document.getElementById('aqSubtopic').value.trim()||'Custom Question';
+  const diff=document.getElementById('aqDiff').value;
+  const exp=document.getElementById('aqExp').value.trim();
+
+  if(!qText){errEl.textContent='Question text is required.';errEl.style.display='block';return;}
+  if(opts.some(o=>!o)){errEl.textContent='All four answer options are required.';errEl.style.display='block';return;}
+  if(addCorrectIdx===null){errEl.textContent='Please select the correct answer.';errEl.style.display='block';return;}
+
+  const newId=Math.max(...QUESTIONS.map(q=>q.id))+1;
+  QUESTIONS.push({id:newId,domain,subtopic,difficulty:diff,q:qText,opts,correct:addCorrectIdx,
+    exp:exp||'No explanation provided.'});
+
+  closeModal('addModal');
+  renderQuestions();
+  // Scroll to bottom to show new question
+  setTimeout(()=>window.scrollTo({top:document.body.scrollHeight,behavior:'smooth'}),100);
+}
+
+// ── Init ──────────────────────────────────────────────────
+renderQuestions();
+</script>
+</body>
+</html>
